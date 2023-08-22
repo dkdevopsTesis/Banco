@@ -14,6 +14,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>();
 builder.Services.AddScoped<IPersonaRepository, PersonaRepository>();
+builder.Services.AddScoped<ICuentaRepository, CuentaRepository>();
 var app = builder.Build();
 
 
