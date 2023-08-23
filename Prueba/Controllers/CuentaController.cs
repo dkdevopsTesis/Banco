@@ -7,6 +7,8 @@ using System.Security.Cryptography;
 
 namespace Prueba.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class CuentaController : Controller
     {
 
@@ -19,14 +21,15 @@ namespace Prueba.Controllers
         }
 
 
-
-        // POST api/<ClienteController>
         [HttpPost("create")]
         public async Task<IActionResult> Post([FromBody] CuentaDto cuentaDto)
         {
-
-            var client = await _cuentaRepo.RegistrarCuenta(cuentaDto);
-            if (client == null)
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState); // Devuelve errores de validación al cliente
+            }
+            var cuenta = await _cuentaRepo.RegistrarCuenta(cuentaDto);
+            if (cuenta == null)
             {
                 _response.StatusCode = HttpStatusCode.BadRequest;
                 _response.IsSuccess = false;
@@ -35,7 +38,7 @@ namespace Prueba.Controllers
             }
             _response.StatusCode = HttpStatusCode.OK;
             _response.IsSuccess = true;
-            return Ok(_response);
+            return Ok(cuenta);
         }
     }
 }

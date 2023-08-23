@@ -7,5 +7,7 @@ namespace Prueba.Repository.IRepository
     {
 
         Task<CuentaDto> RegistrarCuenta(CuentaDto cuenta);
+        public Cuenta ObtenerPorNumeroCuenta(string numeroCuenta);
+        public void Update(Cuenta entidad);
     }
 }

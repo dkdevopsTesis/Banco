@@ -1,6 +1,7 @@
 using Prueba.Model;
 using Prueba.Repository;
 using Prueba.Repository.IRepository;
+using Prueba.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>();
 builder.Services.AddScoped<IPersonaRepository, PersonaRepository>();
 builder.Services.AddScoped<ICuentaRepository, CuentaRepository>();
+builder.Services.AddScoped<IMovimientoRepository, MovimientoRepository>();
+builder.Services.AddScoped<MovimientoService, MovimientoService>();
 var app = builder.Build();
 
 

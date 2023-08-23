@@ -1,4 +1,5 @@
-﻿using Prueba.DTO;
+﻿using Microsoft.EntityFrameworkCore;
+using Prueba.DTO;
 using Prueba.Model;
 using Prueba.Repository.IRepository;
 
@@ -40,6 +41,26 @@ namespace Prueba.Repository
             return cuenta;
         }
 
+        Cuenta ICuentaRepository.ObtenerPorNumeroCuenta(string numeroCuenta)
+        {
+            try
+            {
+                return _db.Cuentas.FirstOrDefault(c => c.NumeroCuenta == numeroCuenta);
+            }
+            catch (Exception ex)
+            {
+
+                throw new ArgumentException("No se encontró una cuenta con el número de cuenta proporcionado.");
+            }
+
+        }
+
+        public void Update(Cuenta entidad)
+        {
+            _db.Attach(entidad);
+            _db.Entry(entidad).State = EntityState.Modified;
+            _db.SaveChanges();
+        }
 
 
     }

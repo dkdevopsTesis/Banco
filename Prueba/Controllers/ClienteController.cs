@@ -21,34 +21,7 @@ namespace Prueba.Controllers
             _response = new();
         }
 
-        [HttpGet("Error")]
-        public async Task<IActionResult> Error()
-        {
-            throw new FileNotFoundException();
-        }
 
-        [HttpGet("ImageError")]
-        public async Task<IActionResult> ImageError()
-        {
-            throw new BadImageFormatException("Fake Image Exception");
-        }
-
-
-        // GET: api/<ClienteController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<ClienteController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<ClienteController>
         [HttpPost("create")]
         public async Task<IActionResult> Post([FromBody] ClienteDto clienteDto )
         {
@@ -63,16 +36,15 @@ namespace Prueba.Controllers
             }
             _response.StatusCode = HttpStatusCode.OK;
             _response.IsSuccess = true;
-            return Ok(_response);
+            return Ok(client);
         }
 
-        // PUT api/<ClienteController>/5
+
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/<ClienteController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
