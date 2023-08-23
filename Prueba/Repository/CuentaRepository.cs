@@ -55,6 +55,11 @@ namespace Prueba.Repository
 
         }
 
+        public Cuenta GetById(int id)
+        {
+            return _db.Cuentas.SingleOrDefault(x => x.CuentaId == id);
+        }
+
         public void Update(Cuenta entidad)
         {
             _db.Attach(entidad);

@@ -22,9 +22,9 @@ namespace Prueba.DTO
     public enum TipoMovimiento
     {
         [Display(Name = "Débito")]
-        Débito,
+        Debito,
 
         [Display(Name = "Crédito")]
-        Crédito
+        Credito
     }
 }

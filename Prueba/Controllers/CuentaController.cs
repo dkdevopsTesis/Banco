@@ -1,6 +1,8 @@
 ﻿using Azure;
 using Microsoft.AspNetCore.Mvc;
 using Prueba.DTO;
+using Prueba.Model;
+using Prueba.Repository;
 using Prueba.Repository.IRepository;
 using System.Net;
 using System.Security.Cryptography;
@@ -13,10 +15,12 @@ namespace Prueba.Controllers
     {
 
         private readonly ICuentaRepository _cuentaRepo;
+        private readonly IPersonaRepository _personaRepo;
         protected APIResponse _response;
-        public CuentaController(ICuentaRepository cuentaRepo)
+        public CuentaController(ICuentaRepository cuentaRepo, IPersonaRepository personaRepo)
         {
-            _cuentaRepo = cuentaRepo;
+            _cuentaRepo = cuentaRepo; 
+            _personaRepo = personaRepo;
             _response = new();
         }
 
@@ -39,6 +43,26 @@ namespace Prueba.Controllers
             _response.StatusCode = HttpStatusCode.OK;
             _response.IsSuccess = true;
             return Ok(cuenta);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateCuenta(int id, [FromBody]  CuentaDto cuenta)
+        {
+        
+            var existingCuenta = _cuentaRepo.ObtenerPorNumeroCuenta(cuenta.NumeroCuenta);
+            var persona = _personaRepo.GetById(cuenta.ClienteId);
+
+            if (existingCuenta == null)
+            {
+                return NotFound();
+            }
+
+             existingCuenta.Cliente = persona;
+            _cuentaRepo.Update(existingCuenta);
+           //await _db.SaveChangesAsync();
+            _response.StatusCode = HttpStatusCode.OK;
+            _response.IsSuccess = true;
+            return Ok(existingCuenta);
         }
     }
 }
